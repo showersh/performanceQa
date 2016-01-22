@@ -25,3 +25,8 @@ case 5:
      1000 create port    serialized 
 case 6:  
      1000 create port   concurrent executed 
+
+
+
+2016.1.22
+   1, merge  create network operation  and paralleled  to create network 
