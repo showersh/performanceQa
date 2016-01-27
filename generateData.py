@@ -11,6 +11,10 @@ class generateData(object):
 
         self.task_name = ''
         self.task_length = 10
+        self.auth_token = ""
+        self.network_task_list = []
+        self.subnet_task_list = []
+        self.port_task_list = []
         self.concurrent_number = 1 
 
     def setCreateNetworkTaskName(self):
@@ -29,6 +33,62 @@ class generateData(object):
     
     def generateNetworkTask(self, task_length=10, concurrent_number=1):
         """ genetate create Network task data
+        """
+        task_dict_list = []
+        authen_token = ''
+        result_dict = self.genetateToken()
+        if result_dict['isOK'] :
+            authen_token = result_dict['auth_token']
+        else:
+            print "fail generate authen tolen"
+            return []
+
+        for i in range(0, self.task_length):
+            task_dict = {'process_id' : '',\
+                         'task_name' : '',\
+                         'network_name' : '',\
+                         'status_code' : '',\
+                         'latency_time' : '',\
+                         'concurrent_number' : '',\
+                         'auth_token' : '',\
+            }
+            task_dict['task_name'] = self.task_name
+            task_dict['network_name'] = self.random_str()
+            task_dict['concurrent_number'] = self.concurrent_number
+            task_dict['auth_token'] = authen_token
+            task_dict_list.append(task_dict)
+        return task_dict_list
+
+    def generateSubnetTask(self, task_length=10, concurrent_number=1):
+        """ genetate create subnet task data
+        """
+        task_dict_list = []
+        authen_token = ''
+        result_dict = self.genetateToken()
+        if result_dict['isOK'] :
+            authen_token = result_dict['auth_token']
+        else:
+            print "fail generate authen tolen"
+            return []
+
+        for i in range(0, self.task_length):
+            task_dict = {'process_id' : '',\
+                         'task_name' : '',\
+                         'network_name' : '',\
+                         'status_code' : '',\
+                         'latency_time' : '',\
+                         'concurrent_number' : '',\
+                         'auth_token' : '',\
+            }
+            task_dict['task_name'] = self.task_name
+            task_dict['network_name'] = self.random_str()
+            task_dict['concurrent_number'] = self.concurrent_number
+            task_dict['auth_token'] = authen_token
+            task_dict_list.append(task_dict)
+        return task_dict_list
+
+    def generatePortTask(self, task_length=10, concurrent_number=1):
+        """ genetate create Port task data
         """
         task_dict_list = []
         authen_token = ''
