@@ -11,7 +11,8 @@ class generateData(object):
 
         self.task_name = ''
         self.current_task_name = ''
-        self.task_length = 100
+        self.task_length = 200
+        #self.task_length = 10
         self.auth_token = ""
         self.network_task_list = []
         self.subnet_task_list = []

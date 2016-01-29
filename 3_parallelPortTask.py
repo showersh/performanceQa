@@ -2,6 +2,7 @@
 import httplib2
 from multiprocessing import Lock, Process, Queue, current_process
 from generateData import generateData 
+from dataHandle import dataHandle
 import json
 import time
 import uuid
@@ -137,13 +138,16 @@ def createPort(auth_token, network_id):
 
 def main():
     
+    network_list = [] 
     start_maint = time.time()
     workers = 10
+    #workers = 1
     work_queue = Queue()
     done_queue = Queue()
     task_name_str = ''
     processes = []
 
+    object_data = dataHandle() 
     object_network = generateData()
     object_network.setCreatePortTaskName()
     task_list = object_network.generatePortTask()
@@ -166,9 +170,10 @@ def main():
          
         with open("perfromqaPort.log", 'a+') as f:
             for task_dict in iter(done_queue.get, 'STOP'):
-                print task_dict
+                #print task_dict
                 if( int(task_dict['status_code']) == 200 or int(task_dict['status_code']) == 201 ):
 
+                    network_list.append(task_dict)
                     information =  "%s %s %s %s OK %s\r\n" % (task_dict['process_id'],\
                     task_dict['task_name'],\
                     task_dict['port_name'],\
@@ -187,6 +192,6 @@ def main():
         information = 'the task %s spend %s seconds\r\n'  % (task_name_str,(end_maint - start_maint))
         f.write(information) 
             #print information
-
+    object_data.dataSave(network_list)
 if __name__ == "__main__":
     main()
